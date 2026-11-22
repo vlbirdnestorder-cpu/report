@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>VL Report</title>
+<script>/* colour theme before first paint (no flash) */try{document.documentElement.setAttribute("data-theme",localStorage.getItem("vlColor")||"cream")}catch(e){document.documentElement.setAttribute("data-theme","cream")}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<style>
+  :root,[data-theme="cream"]{          /* ☀️ cream – warm light, tinted cards */
+    --bg:#FBF0E6; --line:#F0D9C6; --soft:#FBE6D6;
+    --ink:#3B2416; --muted:#8A6F5E; --brand:#B5602E; --brand2:#9A4E22;
+    --inc:#2E7D5B; --exp:#C2552B; --warn:#B42318;
+    --top1:#F6E0CC; --top2:#E9C3A3; --field:#FFFAF5;
+    --c1:#FFF9F3; --c2:#FCEBDD; --p1:#FFF1E4; --p2:#FAD9BF; --pline:#EFC3A0;
+    --i1:#F1F9F3; --i2:#D9EFE1; --e1:#FFF3EC; --e2:#FADCCB; --s1:#FFF8E6; --s2:#F8E6BF; --b1:#FDF0F3; --b2:#F4D9E2;
+    --pick:#F7C7A3; --rowline:#F1DDCC; --icI:#DDF0E4; --icE:#FADCCD; --alertbg:#FCE3DF;
+    --barI:#6FB892; --barE:#E9996F; --lineP:#9A4E22; --grid:#EFDCCB; --dot:#FFFFFF; --hdr:#F6E0CC;
+  }
+  [data-theme="mint"]{                 /* 🍃 mint – fresh light */
+    --bg:#EAF5EF; --line:#CBE4D6; --soft:#D9EEE2;
+    --ink:#1F3A2E; --muted:#5F7D6E; --brand:#2F8466; --brand2:#246B52;
+    --inc:#21855A; --exp:#C4562E; --warn:#B42318;
+    --top1:#D6EEE1; --top2:#B4DEC8; --field:#F7FCF9;
+    --c1:#F7FCF9; --c2:#E1F2E8; --p1:#EAF8F0; --p2:#C9EBD8; --pline:#A9D9BF;
+    --i1:#EFFAF3; --i2:#D2EEDD; --e1:#FFF4EE; --e2:#F9DDCD; --s1:#FBF8E7; --s2:#EEE8C2; --b1:#F1F2FB; --b2:#DCDFF3;
+    --pick:#B4DEC8; --rowline:#D3E8DC; --icI:#D2EEDD; --icE:#F9DDCD; --alertbg:#FCE3DF;
+    --barI:#4FAE80; --barE:#E59A72; --lineP:#246B52; --grid:#D3E8DC; --dot:#FFFFFF; --hdr:#D6EEE1;
+  }
+  [data-theme="brown"]{                /* 🌰 brown – warm dark */
+    --bg:#1F1712; --line:#45342A; --soft:#3A2C22;
+    --ink:#F8ECE1; --muted:#C2A894; --brand:#F2A66B; --brand2:#F6B884;
+    --inc:#7ED6A4; --exp:#F5986C; --warn:#FF8A7A;
+    --top1:#3D2B1F; --top2:#2B1F17; --field:#3A2C22;
+    --c1:#2E221A; --c2:#271D16; --p1:#4A321F; --p2:#382617; --pline:#6A4629;
+    --i1:#243A2D; --i2:#1D2F25; --e1:#43291D; --e2:#362117; --s1:#3F3220; --s2:#33291A; --b1:#3D2630; --b2:#321F28;
+    --pick:#7A4A28; --rowline:#3A2C22; --icI:#1E3A2B; --icE:#4A2B1E; --alertbg:#4A1F1A;
+    --barI:#5FBF8C; --barE:#E58D5F; --lineP:#F6C08F; --grid:#3A2C22; --dot:#2B2019; --hdr:#3D2B1F;
+  }
+  [data-theme="navy"]{                 /* 🌌 navy – blue dark */
+    --bg:#0F1724; --line:#26354D; --soft:#22324B;
+    --ink:#EAF2FC; --muted:#93A6C0; --brand:#FFB36B; --brand2:#FFC48A;
+    --inc:#5EE0A0; --exp:#FF9E6B; --warn:#FF7A7A;
+    --top1:#1F3050; --top2:#152238; --field:#22324B;
+    --c1:#18243A; --c2:#141F31; --p1:#3A2E2A; --p2:#272436; --pline:#55443A;
+    --i1:#153530; --i2:#132B2A; --e1:#3A2A2C; --e2:#2C2230; --s1:#33301F; --s2:#272720; --b1:#2D2645; --b2:#231F38;
+    --pick:#3A4F75; --rowline:#22314A; --icI:#163A33; --icE:#3E2A2A; --alertbg:#3E1E26;
+    --barI:#4CC38A; --barE:#F08A5D; --lineP:#FFC48A; --grid:#24344C; --dot:#172235; --hdr:#1F3050;
+  }
+  [data-theme="brown"],[data-theme="navy"]{color-scheme:dark}
+  body,.card,.k,.top{transition:background-color .35s,color .35s,border-color .35s}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  body{font-family:'Kantumruy Pro',system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.45}
+  .wrap{max-width:520px;margin:0 auto;padding:0 16px 40px}
+
+  .top{margin:0 -16px;padding:18px 16px 16px;border-radius:0 0 22px 22px;
+       background:linear-gradient(135deg,var(--top1),var(--top2))}
+  .shop{color:var(--brand2);font-weight:600;font-size:13px}
+  h1{font-size:21px;margin:0 0 10px;font-weight:700}
+  .month{display:flex;align-items:center;justify-content:space-between;background:var(--field);border-radius:14px;padding:6px}
+  .month button{width:40px;height:36px;border:0;border-radius:10px;background:var(--soft);color:var(--brand);font-size:20px;font-weight:700}
+  .month b{font-size:16px}
+  .sample{display:inline-block;margin-top:8px;background:transparent;border:1px dashed var(--brand);color:var(--brand2);border-radius:999px;padding:1px 10px;font-size:12px}
+
+  .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .k{background:linear-gradient(135deg,var(--k1,var(--c1)),var(--k2,var(--c2)));border:1px solid var(--line);border-radius:16px;padding:12px}
+  .k.ki{--k1:var(--i1);--k2:var(--i2)} .k.ke{--k1:var(--e1);--k2:var(--e2)} .k.ks{--k1:var(--s1);--k2:var(--s2)} .k.kb{--k1:var(--b1);--k2:var(--b2)}
+  .k .t{color:var(--muted);font-size:13px}
+  .k .v{font-size:24px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+  .k .d{font-size:12px;margin-top:2px}
+  .up{color:var(--inc)} .down{color:var(--exp)}
+  .k.profit{grid-column:1 / -1;background:linear-gradient(135deg,var(--p1),var(--p2));border-color:var(--pline)}
+  .card.bal{background:linear-gradient(135deg,var(--p1),var(--p2));border-color:var(--pline)}
+  .k.profit .v{font-size:30px;color:var(--brand2)}
+
+  .card{background:linear-gradient(160deg,var(--c1),var(--c2));border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:14px}
+  .lbl{display:flex;align-items:center;justify-content:space-between;font-weight:600;font-size:16px;margin-bottom:10px}
+  .lbl small{font-weight:500;color:var(--muted);font-size:12px}
+
+  .stock{display:flex;align-items:center;gap:14px}
+  .stock .big{font-size:40px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+  .bar{flex:1}
+  .bar .track{height:12px;border-radius:6px;background:var(--soft);overflow:hidden}
+  .bar .fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#E39A63,#B5602E)}
+  .bar .cap{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:4px}
+  .alert{margin-top:10px;background:var(--alertbg);color:var(--warn);border-radius:10px;padding:6px 10px;font-size:13px;display:none}
+  .low .alert{display:block} .low .big{color:var(--warn)}
+
+  .legend{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-bottom:6px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  svg text{font-family:inherit}
+
+  .tabs{display:flex;gap:6px;margin-bottom:8px}
+  .tabs button{flex:1;border:1px solid var(--line);background:var(--field);border-radius:10px;padding:7px;font:inherit;font-size:14px;color:var(--muted)}
+  .tabs button.on{background:var(--pick);border-color:var(--brand);color:var(--ink);font-weight:600}
+  .row{display:flex;align-items:center;gap:10px;padding:9px 2px;border-top:1px solid var(--rowline)}
+  .row:first-child{border-top:0}
+  .row .ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex:none}
+  .row .ic.i{background:var(--icI)} .row .ic.e{background:var(--icE)}
+  .row .m{flex:1;min-width:0}
+  .row .m b{display:block;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .row .m span{font-size:12px;color:var(--muted)}
+  .row .a{font-weight:700;font-variant-numeric:tabular-nums}
+
+  .bal{display:flex;justify-content:space-between;align-items:center}
+  .bal .v{font-size:22px;font-weight:700;color:var(--brand2)}
+.tophead{display:flex;justify-content:space-between;align-items:flex-start}
+  .sw{display:flex;gap:7px;background:var(--field);border-radius:999px;padding:5px 7px;box-shadow:0 1px 3px #0002}
+  .sw button{width:24px;height:24px;border-radius:50%;border:2px solid transparent;padding:0;cursor:pointer;box-shadow:inset 0 0 0 1px #0002}
+  .sw button.on{border-color:var(--brand);transform:scale(1.12)}
+  svg .gI{fill:var(--barI)} svg .gE{fill:var(--barE)} svg .gL{stroke:var(--lineP)} svg .gG{stroke:var(--grid)} svg .gT{fill:var(--muted)} svg .gC{fill:var(--dot);stroke:var(--lineP)} svg .gOn{fill:var(--ink)}
+  .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:16px}
+  .sub{color:var(--muted);font-size:12px;margin-top:6px}
+  .state{text-align:center;padding:60px 20px;color:var(--muted)}
+  .state .ico{font-size:44px;margin-bottom:10px}
+  .state b{display:block;color:var(--ink);font-size:17px;margin-bottom:6px}
+  .spin{width:34px;height:34px;border-radius:50%;border:4px solid var(--soft);border-top-color:var(--brand);margin:0 auto 14px;animation:sp 0.9s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .btn{display:inline-block;margin-top:14px;border:0;border-radius:12px;background:var(--brand);color:#fff;font:inherit;font-weight:600;padding:10px 22px}
+  .more{width:100%;margin-top:8px;border:1px dashed var(--line);background:transparent;color:var(--brand);border-radius:10px;padding:8px;font:inherit;font-size:14px}
+  .empty{color:var(--muted);text-align:center;padding:14px 0;font-size:14px}
+  .row .m .rm{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .foot button{border:0;background:transparent;color:var(--brand);font:inherit;font-size:12px;text-decoration:underline}
+  #app{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="tophead"><div><div class="shop" id="shop">អំណោយត្រចៀកកាំ</div>
+    <h1>📊 របាយការណ៍ VL</h1></div><div class="sw" id="sw" aria-label="ប្តូរពណ៌"></div></div>
+    <div class="month" id="mbar" style="visibility:hidden"><button id="prev" aria-label="ខែមុន">‹</button><b id="mname">…</b><button id="next" aria-label="ខែបន្ទាប់">›</button></div>
+  </div>
+
+  <div id="state" class="state"><div class="spin"></div>កំពុងផ្ទុកទិន្នន័យ…</div>
+
+  <div id="app">
+  <div class="kpis">
+    <div class="k profit"><div class="t">💰 ចំណេញ</div><div class="v" id="kp"></div><div class="d" id="kpd"></div></div>
+    <div class="k ki"><div class="t">⬆️ ចំណូល</div><div class="v up" id="ki"></div><div class="d" id="kid"></div></div>
+    <div class="k ke"><div class="t">⬇️ ចំណាយ</div><div class="v down" id="ke"></div><div class="d" id="ked"></div></div>
+    <div class="k ks"><div class="t">🫙 ដបលក់បាន</div><div class="v" id="ks"></div><div class="d" id="ksd"></div></div>
+    <div class="k kb"><div class="t">🎁 ដបថែម</div><div class="v" id="kb"></div><div class="d" style="color:var(--muted)">ដបថែមជូនអតិថិជន</div></div>
+  </div>
+
+  <div class="card" id="stockCard">
+    <div class="lbl">📦 ស្តុកនៅសល់ <small id="stin"></small></div>
+    <div class="stock"><div class="big" id="sl"></div>
+      <div class="bar"><div class="track"><div class="fill" id="sf"></div></div>
+        <div class="cap"><span>ដប (ចុងខែ)</span><span id="scap"></span></div></div></div>
+    <div class="alert">⚠️ ស្តុកជិតអស់ នៅសល់តែ <b id="alertN"></b> ដប សូមបញ្ជាទិញបន្ថែម</div>
+  </div>
+
+  <div class="card">
+    <div class="lbl">📈 ៦ ខែចុងក្រោយ <small>$</small></div>
+    <div class="legend"><span><i style="background:var(--barI)"></i>ចំណូល</span><span><i style="background:var(--barE)"></i>ចំណាយ</span><span><i style="background:var(--lineP);height:3px"></i>ចំណេញ</span></div>
+    <svg id="chart" viewBox="0 0 340 190" width="100%"></svg>
+  </div>
+
+  <div class="card">
+    <div class="lbl">🧾 ប្រតិបត្តិការ <small id="txn"></small></div>
+    <div class="tabs"><button class="on" data-t="all">ទាំងអស់</button><button data-t="i">ចំណូល</button><button data-t="e">ចំណាយ</button></div>
+    <div id="list"></div>
+  </div>
+
+  <div class="card bal">
+    <div><div style="font-weight:600">🏦 សមតុល្យសរុប</div><div style="font-size:12px;color:var(--muted)" id="balsub"></div></div>
+    <div class="v" id="bal"></div>
+  </div>
+  <div class="foot"><span id="at"></span> · <button id="reload">↻ ផ្ទុកឡើងវិញ</button></div>
+  </div>
+</div>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+(function(){
+var Q=new URLSearchParams(location.search), API=Q.get('api')||'';
+var TG=window.Telegram&&Telegram.WebApp;
+try{if(TG){TG.ready();TG.expand();}}catch(e){}
+var M=['មករា','កុម្ភៈ','មីនា','មេសា','ឧសភា','មិថុនា','កក្កដា','សីហា','កញ្ញា','តុលា','វិច្ឆិកា','ធ្នូ'];
+var D=null, cur=0, tab='all', shown=20;
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function money(n){n=Math.round((+n||0)*100)/100;var a=Math.abs(n),s=a%1?a.toFixed(2):String(a);s=s.replace(/\B(?=(\d{3})+(?!\d))/g,',');return (n<0?'−$':'$')+s}
+function pct(a,b){return b?Math.round((a-b)/Math.abs(b)*100):0}
+function delta(el,now,prev,goodUp){
+  if(prev===undefined||prev===null||!prev){el.textContent='';return}
+  var p=pct(now,prev), good=goodUp===false?p<=0:p>=0;
+  el.innerHTML='<span class="'+(good?'up':'down')+'">'+(p>=0?'▲':'▼')+' '+Math.abs(p)+'%</span> <span style="color:var(--muted)">ធៀបខែមុន</span>';
+}
+function state(ico,title,text,retry){
+  $('app').style.display='none'; if(!D) $('mbar').style.visibility='hidden'; var s=$('state'); s.style.display='block';
+  s.innerHTML='<div class="ico">'+ico+'</div><b>'+title+'</b>'+(text||'')+(retry?'<br><button class="btn" id="retry">↻ ព្យាយាមម្តងទៀត</button>':'');
+  if(retry) $('retry').onclick=load;
+}
+function render(){
+  var y=D.year, d=D.months[cur-1], p=cur>1?D.months[cur-2]:null;
+  $('mname').textContent=M[cur-1]+' '+y;
+  $('kp').textContent=money(d.net); $('kp').style.color=d.net<0?'var(--warn)':'';
+  $('ki').textContent=money(d.inc); $('ke').textContent=money(d.exp);
+  $('ks').textContent=d.sold; $('kb').textContent=d.bonus;
+  delta($('kpd'),d.net,p&&p.net); delta($('kid'),d.inc,p&&p.inc); delta($('ked'),d.exp,p&&p.exp,false); delta($('ksd'),d.sold,p&&p.sold);
+  $('sl').textContent=d.stock; $('stin').textContent=d.stockIn?'ចូលខែនេះ +'+d.stockIn:'';
+  var start=(p?p.stock:0)+d.stockIn, cap=Math.max(start,d.stock,1);
+  $('sf').style.width=Math.max(0,Math.min(100,d.stock/cap*100))+'%'; $('scap').textContent='ពី '+cap;
+  $('stockCard').classList.toggle('low',d.stock<=D.low); $('alertN').textContent=d.stock;
+  var bal=D.profitPrev; for(var i=0;i<cur;i++) bal+=D.months[i].net;
+  $('bal').textContent=money(bal); $('balsub').textContent='ចំណេញឆ្នាំ '+(y-1)+' + ឆ្នាំ '+y+' ដល់ខែ'+M[cur-1];
+  $('prev').style.visibility=cur>1?'visible':'hidden';
+  $('next').style.visibility=cur<D.cur?'visible':'hidden';
+  chart(); shown=20; list();
+}
+function chart(){
+  var ks=[]; for(var k=Math.max(1,cur-5);k<=cur;k++) ks.push(k);
+  var W=340,H=190,L=38,B=24,T=10,cw=(W-L-6)/Math.max(ks.length,6);
+  var vals=[]; ks.forEach(function(k){var d=D.months[k-1];vals.push(d.inc,d.exp,d.net)});
+  var hi=Math.max.apply(null,vals.concat([0])), lo=Math.min.apply(null,vals.concat([0]));
+  var step=[10,20,50,100,200,500,1000,2000,5000,10000].find(function(s){return (hi-lo)/s<=5})||20000;
+  var top=Math.ceil(hi/step)*step||step, bot=Math.floor(lo/step)*step;
+  var y=function(v){return T+(H-T-B)*(top-v)/(top-bot)};
+  var s='';
+  for(var g=bot;g<=top;g+=step) s+='<line x1="'+L+'" x2="'+W+'" y1="'+y(g)+'" y2="'+y(g)+'" class="gG"/><text class="gT" x="'+(L-6)+'" y="'+(y(g)+4)+'" font-size="10" text-anchor="end">'+g+'</text>';
+  var pts=[];
+  ks.forEach(function(k,i){var d=D.months[k-1],x=L+i*cw+cw/2,bw=cw*0.3,on=k===cur,z=y(0);
+    s+='<rect x="'+(x-bw-1)+'" y="'+Math.min(y(d.inc),z)+'" width="'+bw+'" height="'+Math.abs(z-y(d.inc))+'" rx="3" class="gI" opacity="'+(on?1:.55)+'"/>';
+    s+='<rect x="'+(x+1)+'" y="'+Math.min(y(d.exp),z)+'" width="'+bw+'" height="'+Math.abs(z-y(d.exp))+'" rx="3" class="gE" opacity="'+(on?1:.55)+'"/>';
+    s+='<text x="'+x+'" y="'+(H-7)+'" font-size="10" class="'+(on?'gOn':'gT')+'" font-weight="'+(on?700:400)+'" text-anchor="middle">'+M[k-1]+'</text>';
+    pts.push([x,y(d.net)]);
+  });
+  if(pts.length>1) s+='<polyline points="'+pts.map(function(p){return p.join(',')}).join(' ')+'" fill="none" class="gL" stroke-width="2.5" stroke-linejoin="round"/>';
+  pts.forEach(function(p){s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.5" class="gC" stroke-width="2"/>'});
+  $('chart').innerHTML=s;
+}
+function list(){
+  var key=D.year+'-'+String(cur).padStart(2,'0');
+  var rows=D.tx.filter(function(x){return x.d.slice(0,7)===key&&(tab==='all'||x.t===tab)});
+  $('txn').textContent=rows.length?rows.length+' ជួរ':'';
+  if(!rows.length){$('list').innerHTML='<div class="empty">មិនមានប្រតិបត្តិការក្នុងខែនេះ</div>';return}
+  $('list').innerHTML=rows.slice(0,shown).map(function(x){
+    var dd=x.d.slice(8,10)+'/'+x.d.slice(5,7), name=esc(x.n)+(x.t==='i'&&x.q?' · '+x.q+' ដប':'')+(x.b?' · 🎁'+x.b:'');
+    return '<div class="row"><div class="ic '+x.t+'">'+(x.t==='i'?'🫙':'🛒')+'</div><div class="m"><b>'+name+'</b><span>'+dd+'</span>'+
+      (x.r?'<span class="rm">📝 '+esc(x.r)+'</span>':'')+'</div><div class="a '+(x.t==='i'?'up':'down')+'">'+(x.t==='i'?'+':'−')+money(x.a).replace('−','')+'</div></div>';
+  }).join('')+(rows.length>shown?'<button class="more" id="more">មើលបន្ថែម ('+(rows.length-shown)+')</button>':'');
+  if($('more')) $('more').onclick=function(){shown+=30;list()};
+}
+document.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){
+  document.querySelectorAll('.tabs button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');tab=b.dataset.t;shown=20;list()}});
+$('prev').onclick=function(){if(D&&cur>1){cur--;render()}};
+$('next').onclick=function(){if(D&&cur<D.cur){cur++;render()}};
+$('reload').onclick=function(){load()};
+
+function show(data){
+  D=data; if(!cur||cur>D.cur) cur=D.cur;
+  $('shop').textContent=D.shop||'';
+  $('at').textContent='ធ្វើបច្ចុប្បន្នភាព '+D.at;
+  $('state').style.display='none'; $('app').style.display='block'; $('mbar').style.visibility='visible'; render();
+}
+function load(){
+  if(Q.get('demo')){show(window.DEMO);return}
+  if(!TG||!TG.initData){state('📱','សូមបើកតាម Telegram','បើកទំព័រនេះពីប៊ូតុង 📊 ក្នុង Bot');return}
+  if(!API){state('⚙️','មិនទាន់ភ្ជាប់','សូម Run connectDashboard ក្នុង Apps Script ម្តងទៀត');return}
+  if(!D) state('','','<div class="spin"></div>កំពុងផ្ទុកទិន្នន័យ…');
+  else $('at').textContent='កំពុងផ្ទុក…';
+  fetch(API+(API.indexOf('?')<0?'?':'&')+'api=dash',{method:'POST',body:JSON.stringify({initData:TG.initData}),redirect:'follow'})
+    .then(function(r){return r.json()})
+    .then(function(r){
+      if(r.ok) return show(r);
+      if(r.err==='notallowed') return state('🔒','គ្មានសិទ្ធិមើល','Telegram ID របស់អ្នក: <b style="display:inline">'+esc(r.id)+'</b><br>សូមឲ្យម្ចាស់ហាងថែម ID នេះក្នុង Settings B6');
+      if(r.err==='auth') return state('⏳','សូមបើកទំព័រម្តងទៀត','បិទទំព័រនេះ ហើយចុច 📊 ក្នុង Bot ម្តងទៀត',false);
+      state('⚠️','មានបញ្ហា',esc(r.msg||r.err||''),true);
+    })
+    .catch(function(){state('📶','ភ្ជាប់មិនបាន','ពិនិត្យអ៊ីនធឺណិត ហើយព្យាយាមម្តងទៀត',true)});
+}
+
+// ---- colour themes: tap a circle (remembered on this phone) ----
+var THEMES=[['cream','#F3D2B4','#E8B48A','ក្រែម'],['mint','#A8DCC0','#6FBF98','បៃតង'],['brown','#6B4630','#4A2F20','ត្នោត'],['navy','#2C4470','#1A2A48','ខៀវយប់']];
+var theme='cream'; try{theme=localStorage.getItem('vlColor')||'cream'}catch(e){}
+if(!THEMES.some(function(t){return t[0]===theme})) theme='cream';
+$('sw').innerHTML=THEMES.map(function(t){return '<button data-t="'+t[0]+'" title="'+t[3]+'" style="background:linear-gradient(135deg,'+t[1]+','+t[2]+')"></button>'}).join('');
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme',theme);
+  document.querySelectorAll('#sw button').forEach(function(b){b.classList.toggle('on',b.dataset.t===theme)});
+  var bg=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(), hd=getComputedStyle(document.documentElement).getPropertyValue('--hdr').trim();
+  if(TG&&TG.setHeaderColor){try{TG.setHeaderColor(hd);TG.setBackgroundColor(bg)}catch(e){}}
+}
+document.querySelectorAll('#sw button').forEach(function(b){b.onclick=function(){theme=b.dataset.t;try{localStorage.setItem('vlColor',theme)}catch(e){};applyTheme()}});
+applyTheme(); load();
+})();
+</script>
+</body>
+</html>
